@@ -16,7 +16,7 @@ class ParentCalss {
     }
     
 }
-
+//
 //var parent : ParentCalss? = ParentCalss()
 //var child : ParentCalss? = ParentCalss()
 //
@@ -34,7 +34,7 @@ class ViewController {
     init(){
         print("클래스 생성")
         
-        completHandler = { [weak self] result in
+        completHandler = { [weak self]result in
             self?.printHello(result)
         }
         
@@ -56,11 +56,13 @@ class ViewController {
     }
     
 }
-
+//
 //var viewController  : ViewController? = ViewController()
 //viewController = nil
 
 
+
+//함수 내부에 선언된 클로저는 함수가 반환 될 때 사라진다.
 class ClosureClass {
     var name : String? = nil
     
@@ -87,7 +89,7 @@ class ClosureClass {
 //var closureClass : ClosureClass? = ClosureClass()
 //closureClass = nil
 
-protocol SomeDelegate {
+protocol SomeDelegate : class{
     func funcPrint()
 }
 
@@ -117,7 +119,7 @@ class MainViewController : SomeDelegate {
 }
 
 class ChildViewController {
-    var delegate : SomeDelegate?
+   weak var delegate : SomeDelegate?
     
     init(){
         print("ChildViewController 생성")

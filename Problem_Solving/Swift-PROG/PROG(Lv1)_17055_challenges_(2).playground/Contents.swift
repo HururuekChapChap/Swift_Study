@@ -66,6 +66,6 @@ func isCanPass(_ x : Int ,_ height : Int) -> Bool {
     
 }
 
-let drum : [String] = ["******", "******"]
+let drum : [String] = ["*>****", "**#<**"]
 
 print(solution(drum))
