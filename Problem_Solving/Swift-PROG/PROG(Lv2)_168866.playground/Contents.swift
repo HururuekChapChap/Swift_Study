@@ -2,7 +2,7 @@ import UIKit
 
 var map : [Bool] = []
 var answerList : [Int] = []
-func solution(_ number:String, _ k:Int) -> String {
+func solution2(_ number:String, _ k:Int) -> String {
     
     let splitNumber = Array(number).map { (char) -> String in
         return String(char)
@@ -39,7 +39,15 @@ func combination(_ cnt : Int , _ index : Int ,_ total : Int,_ splitNumber : [Str
     
 }
 
+//1000000 자리 까지 가능
 let number : String = "4177252841"
 let k : Int = 4
 
 print(solution(number, k))
+
+func solution(_ number:String, _ k:Int) -> String {
+
+    
+    
+    return ""
+}
