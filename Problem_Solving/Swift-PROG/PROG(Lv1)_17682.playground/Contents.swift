@@ -93,12 +93,26 @@ print(returnStringByRex(pattern: "Hello$", word: "Hello evey Body Hello"))
 
 //... 이것은 갯수 만큼 보여주는 것 입니다. 다른 표현으로 .{3} 이렇게 가능합니다.
 
+print(returnStringByRex(pattern: "...", word: "Hello evey Body"))
+print(returnStringByRex(pattern: ".{3}", word: "Hello evey Body"))
+
 //[]은 한 문자만 의미한다. 따라서 a-z 의 한 문자를 의미한다. [^]은 그외의 것을 의미한다.
+print(returnStringByRex(pattern: "[a-h]", word: "Hello evey Body"))
+print(returnStringByRex(pattern: "[^a-h]", word: "Hello evey Body"))
 
 //*은 e* 라고 할때, e가 연속적으로 0개 이상 여러개 까지 뽑아온다. 하지만 e가 아닌 위치일 경우에는 공백으로 만든다.
+print(returnStringByRex(pattern: "e*", word: "Hello evey Body"))
+print(returnStringByRex(pattern: "e*l", word: "Hello evey Body"))
 //+은 e+ 라고 할때, e가 연속적으로 한개 이상 여러개 까지 뽑아온다. 따라서 존재하지 않다면 뽑아오지 않는다.
+print(returnStringByRex(pattern: "e+", word: "Hello evey Body"))
+print(returnStringByRex(pattern: "e+v", word: "Hello evey Body"))
 //?는 e? 라고 할때, e가 없으면 공백으로 있으면 그 문자 하나만 가져온다.
+print(returnStringByRex(pattern: "e?", word: "Hello evey Body"))
+print(returnStringByRex(pattern: "e?l", word: "Hello evey Body"))
 //그런데 만약 e*K 나 e+k 등 하나의 문자만 사용 된다면 그 조건만 되는 것을 반환한다.
+
+print(returnStringByRex(pattern: "(Hello|evey)", word: "Hello evey Body"))
+print(returnStringByRex(pattern: "([h]|[b])", word: "Hello evey Body"))
 
 
 //do {
