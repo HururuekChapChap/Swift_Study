@@ -1,37 +1,90 @@
 import UIKit
 
-func solution(_ number:String, _ k:Int) -> String {
+func solution2(_ number:String, _ k:Int) -> String {
     
-    var space : [Int] = []
-
-    for (index , element) in number.enumerated(){
+    var returnSize = number.count - k
+    let arrayNum = Array(number).map { (char) -> Int in
+        return Int(String(char))!
+    }
+    
+    var index = -1
+    var numList : [Int] = []
+    
+    while returnSize > 0 {
         
-        let charToint = Int(String(element))!
+        var tempIndex = 0
+        var maxElement = -1
         
-        if space.isEmpty {
-            space.append(charToint)
-        }
-        else{
+        for search in (index + 1)...(number.count - returnSize){
             
-            let last = space[space.count - 1]
+            let searchNum = arrayNum[search]
             
-            if space.count == number.count - k {
+            if maxElement < searchNum {
+                maxElement = searchNum
+                tempIndex = search
                 
-                // 회정하면서 최대로 작은 값 까지 변경 / 마지막
-                
-            }
-            else{
-                
-                //last 값 보다 element 값이 더 크면 chanage
-                //그게 아니면 넣어준다.
-                
-                775
-                
+                if maxElement == 9 {
+                    break
+                }
             }
             
         }
+        
+        index = tempIndex
+        numList.append( arrayNum[index] )
+        returnSize -= 1
         
     }
     
-    return ""
+    let answer : [String] = numList.map { (element) -> String in
+        return String(element)
+    }
+    
+    
+    return answer.joined()
 }
+
+
+let number = "4177252841"
+let k = 9
+print(solution(number, k))
+
+
+func solution(_ number:String, _ k:Int) -> String {
+    
+    let maxCnt = number.count - k
+    let arrayNum = Array(number).map { (char) -> Int in
+        return Int(String(char))!
+    }
+    
+    var answerList : [Int] = []
+    var k = k
+    for (index , element) in arrayNum.enumerated() {
+        
+        if k != 0 {
+        
+            var maxRemove = arrayNum.count - index >= maxCnt ? maxCnt : arrayNum.count - index
+           
+            while maxRemove > 0 && !answerList.isEmpty && answerList.last! < element && k > 0{
+                answerList.removeLast()
+                k -= 1
+                maxRemove -= 1
+            }
+            
+        }
+        
+        if answerList.count < maxCnt {
+                
+            answerList.append(element)
+            
+        }
+        
+//        print(index , k , answerList)
+        
+    }
+    
+    return answerList.map { (element) -> String in
+        return String(element)
+    }.reduce("", +)
+}
+
