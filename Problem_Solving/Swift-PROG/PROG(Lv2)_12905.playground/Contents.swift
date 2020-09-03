@@ -5,27 +5,69 @@ func solution(_ board:[[Int]]) -> Int
 {
     var answer:Int = 0
         
-    var cnt = 0
-    
-    for Y in board {
-        
-        for X in Y{
+    var map = board
+    let ylenght = board.count
+    let xlenght = board[0].count
+
+//    for (yndex , ylement) in board.enumerated() {
+//
+//
+//        for (xndex, xlement ) in ylement.enumerated() {
+//
+////            print(yndex , xndex)
+//            if xlement == 1 {
+//
+//            if yndex == 0 || xndex == 0 {
+//                map[yndex][xndex] = xlement
+//            }
+//            else{
+//
+//                map[yndex][xndex] = min(map[yndex][xndex - 1], map[yndex - 1][xndex] , map[yndex - 1][xndex - 1] ) + 1
+//            }
+//
+//            answer = max(answer , map[yndex][xndex])
+//
+//            }
+//        }
+//
+//    }
+
+    for yndex in 0..<ylenght {
             
-            if X == 1 {
-                cnt += 1
+        for xndex in 0..<xlenght {
+                
+
+            
+                if map[yndex][xndex] == 1 {
+                        
+
+                    
+                if yndex != 0 && xndex != 0 {
+                            
+                    
+                map[yndex][xndex] = min(map[yndex][xndex - 1], map[yndex - 1][xndex] , map[yndex - 1][xndex - 1] ) + 1
+                    
+
+            
+                }
+                    
+                    answer = max(answer , map[yndex][xndex])
+                        
+                    }
+            
             }
             
         }
         
-    }
-
-    answer = cnt / board.count
-    
+ 
     return answer * answer
 }
 
-let board : [[Int]] = [[0,1],[1,1,1,1]]
-solution(board)
+//0 0 1 1
+//1 1 1 1
+
+let board : [[Int]] = [[0,1,1,1],[1,1,1,1]]
+print(solution(board))
 
 let UD : [Int] = [1,-1,0,0]
 let LR : [Int] = [0,0,1,-1]
