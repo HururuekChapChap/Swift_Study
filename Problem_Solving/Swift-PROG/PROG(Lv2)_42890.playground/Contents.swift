@@ -184,4 +184,22 @@ func combination(_ current : Int , _ index : Int , _ max : Int, _ list : [Int], 
 
 let relation = [["100","ryan","music","2"],["200","apeach","math","2"],["300","tube","computer","3"],["400","con","computer","4"],["500","muzi","music","3"],["600","apeach","music","2"]]
 
-print(solution(relation))
+//print(solution(relation))
+
+
+let test1 : Set =  ["Alicia", "Bethany", "Chris", "Diana", "Eric"]
+let test2 : Set = [ "Alicia", "Bethany" , "Bethany"]
+
+//A에서 B와의 공통점을 빼고 남은 것
+let answer = test2.subtracting(test1)
+
+//A가 B의 부분 집한 인가... 모든 원소가 모두 포함 되는가
+let issubset = test2.isSubset(of: test1)
+
+if issubset {
+    print(answer)
+}
+else{
+    print("NO")
+}
+
