@@ -87,4 +87,12 @@ func solution(_ cacheSize:Int, _ cities:[String]) -> Int {
 let cacheSize = 2
 let cities : [String] = []
 
-print(solution(cacheSize, cities))
+//print(solution(cacheSize, cities))
+
+var queue : [String] = ["A", "B","C","D","E"]
+
+let a = queue.firstIndex(of: "C")!
+
+queue.remove(at: a)
+
+print(queue)
