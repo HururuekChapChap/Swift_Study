@@ -191,7 +191,7 @@ let test1 : Set =  ["Alicia", "Bethany", "Chris", "Diana", "Eric"]
 let test2 : Set = [ "Alicia", "Bethany" , "Bethany"]
 
 //A에서 B와의 공통점을 빼고 남은 것
-let answer = test2.subtracting(test1)
+let answer = test1.subtracting(test2)
 
 //A가 B의 부분 집한 인가... 모든 원소가 모두 포함 되는가
 let issubset = test2.isSubset(of: test1)

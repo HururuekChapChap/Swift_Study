@@ -46,15 +46,22 @@ func solution(_ m:String, _ musicinfos:[String]) -> String {
         }
     
         //시간 계산
-        let minute = (Int(end[0])! * 60 + Int(end[1])!) - (Int(start[0])! * 60 + Int(start[1])!)
+        var minute = (Int(end[0])! * 60 + Int(end[1])!) - (Int(start[0])! * 60 + Int(start[1])!)
 //        print(minute , rithym.count)
         
         
         var originMusict = makeMlist(rithym)
             
-        if minute - originMusict.count > 0 {
-            originMusict = makeMusic(minute, originMusict)
-        }
+        if(minute < 0) { minute *= -1 } // 23:00 - 00:00
+        
+        originMusict = makeMusic(minute, originMusict)
+        
+//        if minute - originMusict.count > 0 {
+//            originMusict = makeMusic(minute, originMusict)
+//        }
+//        else{
+//            originMusict = makeMusic(minute - originMusict.count, originMusict)
+//        }
 
         print(originMusict)
         var flag = false
@@ -123,14 +130,13 @@ func makeMusic(_ minute : Int ,_ origin : [String]) -> [String] {
 
 
 func makeMlist(_ temp : [String]) -> [String] {
-    
+ 
     var mList : [String] = []
     
     var index = 0
     while index < temp.count {
         
         var twoWord = ""
-        
         if index < temp.count - 1 {
         
             twoWord = temp[index] + temp[index + 1]
@@ -160,11 +166,24 @@ func makeMlist(_ temp : [String]) -> [String] {
 }
 
 
-let m = "cdcdf"
+let m = "AA#BD#D"
 
 let musicinfo = ["04:00,04:02,ZERO,cdcdcdf"]
 
-print(solution(m, musicinfo))
+//print(solution(m, musicinfo))
+
+func replaceSharp(music: String) -> String {
+    var replacedMusic = music
+    replacedMusic = replacedMusic.replacingOccurrences(of: "C#", with: "c")
+    replacedMusic = replacedMusic.replacingOccurrences(of: "D#", with: "d")
+    replacedMusic = replacedMusic.replacingOccurrences(of: "F#", with: "f")
+    replacedMusic = replacedMusic.replacingOccurrences(of: "G#", with: "g")
+    replacedMusic = replacedMusic.replacingOccurrences(of: "A#", with: "a")
+    return replacedMusic
+}
+
+print( replaceSharp(music: m)  )
+
 
 
 
