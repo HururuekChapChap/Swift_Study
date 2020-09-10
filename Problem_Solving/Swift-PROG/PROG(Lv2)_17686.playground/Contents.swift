@@ -74,7 +74,7 @@ func returnStringByRex(pattern : String , word : String) -> [String] {
 
 let files = ["img12.png", "img10.png", "img02.png", "img1.png", "IMG01.GIF", "img2.JPG", "F-15","img1...png"]
 
-print(solution(files))
+//print(solution(files))
 
 
 
@@ -82,4 +82,4 @@ let test = "img1...png"
 
 let numb = returnStringByRex(pattern: "[0-9][0-9]?[0-9]?[0-9]?[0-9]?", word: test)
 
-//print(numb)
+print(numb)

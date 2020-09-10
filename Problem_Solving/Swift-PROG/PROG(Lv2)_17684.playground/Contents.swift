@@ -68,7 +68,7 @@ var dic = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".reduce(into: [String: Int](), { d, s in
        d[String(s)] = d.count+1
    })
 
-//print(dic)
+print(dic)
 
 let result = msg.reduce(into: [Character]() ) { (stack, char) in
     return stack.append(char)
