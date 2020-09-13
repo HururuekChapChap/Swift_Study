@@ -115,18 +115,13 @@ func dfs(_ currentX : Int , _ currentY : Int ,_ before : Int ,_ board : [[Int]],
                     
                     check[nextY][nextX] = true
                     
-                    
                 }
                 
-                
             }
-            
-            
             
         }
         
     }
-    
     
 }
 
