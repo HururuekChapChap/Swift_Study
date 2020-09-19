@@ -114,3 +114,6 @@ let testArray : [(a: Int , b: Int)] = [(1,2),(2,3),(3,4),(1,3),(2,4),(3,5)]
 test.buildHeap(inputArray: testArray)
 
 print(test.element)
+
+
+
