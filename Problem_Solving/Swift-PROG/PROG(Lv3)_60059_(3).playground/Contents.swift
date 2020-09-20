@@ -24,11 +24,13 @@ func solution(_ key:[[Int]], _ lock:[[Int]]) -> Bool {
 //
 //    print()
     
+    let cnt = key.count - 1
+    
     for _ in 0..<4{
     
-    for y in 1...key.count + 2{
+    for y in 1...lock.count + cnt{
     
-    for x in 1...key.count + 2{
+    for x in 1...lock.count + cnt{
         
         if moveKey(x: x, y : y, board, key, lock) {
            return true
@@ -70,6 +72,11 @@ func moveKey( x : Int, y : Int,_ board : [[Int]],_ key : [[Int]],_ lock : [[Int]
         y += 1
         
     }
+//    
+//    for element in tempBoard{
+//        print(element)
+//    }
+//    print()
     
     return checkISFit(tempBoard, lock)
 }
@@ -108,18 +115,18 @@ func rotateKey(_ key : [[Int]]) -> [[Int]]{
         
     }
     
-    for element in tempKey{
-        print(element)
-    }
-
-    print()
+//    for element in tempKey{
+//        print(element)
+//    }
+//
+//    print()
 
     return tempKey
 }
 
 
-let key : [[Int]] = [[1, 1, 1], [0,0, 0], [1, 1, 1]]
-let loct : [[Int]] = [[0, 1, 0], [0, 1, 0], [0, 1, 0]]
+let key : [[Int]] = [[1,1,1],[1,1,1],[1,1,1]]
+let loct : [[Int]] = [[1,1,1], [1,0,1], [1, 1, 1]]
 
 
 print(solution(key, loct))
