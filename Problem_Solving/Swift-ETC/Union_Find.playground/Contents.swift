@@ -31,4 +31,12 @@ func isSibling(_ list : inout [Int], _ a : Int, _ b : Int) -> Bool{
     return aParent == bParent
 }
 
-var list = Array(repeating: <#T##_#>, count: <#T##Int#>)
+var list = Array(stride(from: 0, to: 5, by: 1))
+
+print(list)
+
+unionParent(&list, 0, 2)
+
+print(list)
+
+isSibling(&list, 0, 2)
