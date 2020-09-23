@@ -72,11 +72,6 @@ func moveKey( x : Int, y : Int,_ board : [[Int]],_ key : [[Int]],_ lock : [[Int]
         y += 1
         
     }
-//    
-//    for element in tempBoard{
-//        print(element)
-//    }
-//    print()
     
     return checkISFit(tempBoard, lock)
 }

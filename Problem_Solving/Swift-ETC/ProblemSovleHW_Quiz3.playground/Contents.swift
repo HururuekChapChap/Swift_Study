@@ -32,10 +32,10 @@ func solution(_ list : [Int]){
 
 func DFS(_ yindex : Int, _ number : Int, _ cnt : Int, _ isfirst : Bool){
     
-    print(visited)
+//    print(visited)
     
     if cnt > 2 {
-        print("too many \(cnt) \(yindex)")
+//        print("too many \(cnt) \(yindex)")
         return}
     
     for x in stride(from: yindex + 1, to: map.count, by: +1){
@@ -44,7 +44,7 @@ func DFS(_ yindex : Int, _ number : Int, _ cnt : Int, _ isfirst : Bool){
             
             if visited[x] == 0{
                 
-                print("firstNode : \(yindex) \(x)")
+//                print("firstNode : \(yindex) \(x)")
                 
                 visited[x] = cnt
                 DFS(x, map[yindex][x], cnt, false)
@@ -58,7 +58,7 @@ func DFS(_ yindex : Int, _ number : Int, _ cnt : Int, _ isfirst : Bool){
             
             if visited[x] == 0 {
             
-                print("same Number : \(yindex) \(x) \(number) \(map[yindex][x])")
+//                print("same Number : \(yindex) \(x) \(number) \(map[yindex][x])")
                 
             visited[x] = cnt
             DFS(x , map[yindex][x], cnt,false)
@@ -70,7 +70,7 @@ func DFS(_ yindex : Int, _ number : Int, _ cnt : Int, _ isfirst : Bool){
             
             if visited[x] == 0 ,let firstNode = visited.firstIndex(of: 0) {
             
-            print("not same number : \(yindex) \(x) \(firstNode)")
+//            print("not same number : \(yindex) \(x) \(firstNode)")
             
             visited[firstNode] = cnt + 1
             DFS(firstNode,-1, cnt + 1, true)
@@ -89,7 +89,7 @@ func DFS(_ yindex : Int, _ number : Int, _ cnt : Int, _ isfirst : Bool){
         
         if let firstNode = visited.firstIndex(of: 0) {
          
-            print("single cnt and last index go to \(firstNode)")
+//            print("single cnt and last index go to \(firstNode)")
             
             visited[firstNode] = cnt + 1
             DFS(firstNode, -1, cnt + 1, true)
@@ -98,14 +98,14 @@ func DFS(_ yindex : Int, _ number : Int, _ cnt : Int, _ isfirst : Bool){
             
         }
         else{
-            print("single cnt and no left index to do so just End")
+//            print("single cnt and no left index to do so just End")
         }
         
     }
     else if cnt == 2{
         
         if visited.firstIndex(of: 0) != nil {
-            print("left element exist so just pass : \(yindex)")
+//            print("left element exist so just pass : \(yindex)")
         }
         else{
             print("answer Find : \(visited)")
@@ -117,7 +117,7 @@ func DFS(_ yindex : Int, _ number : Int, _ cnt : Int, _ isfirst : Bool){
     
 }
 
-let list : [Int] = [1,2,7,9, 13 ,16 ,19, 23]
+let list : [Int] = [42, 12, 36, 36, 54, 33, 30, 24, 51, 39, 45, 18, 42, 48, 6]
     
     //[4,3,1,2] -> (1,2,3 | 4) 가 안된다.
     
