@@ -58,7 +58,7 @@ func solution(_ n : Int , _ p : [Int], _ c : [Int]) -> String{
 }
 
 let n = 6
-let p = [0,1,1,0,0,1]
-let c = [1,1,1,1,1,1]
+let p = [5, 4, 7, 2, 0, 6]
+let c = [4, 6, 4, 9, 2, 3]
 
 print(solution(n, p, c))
