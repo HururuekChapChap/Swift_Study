@@ -3,13 +3,13 @@ import UIKit
 var S : [Int] = Array(0..<256)
 var K : [String] = []
 
-var key = "Ramen"
-var inputText = "Rivest"
+var key = "RC4"
+var inputText = "Homework"
 
 var key_StreamBytes : [Int] = []
 
 
-func initRc4(){
+func 초기화함수(){
     
     let keyList = Array(key).map { (char) -> String in
         return String(char)
@@ -21,13 +21,15 @@ func initRc4(){
         
     }
     
-//    print(K)
+    print("Key문을 반복해서 255개의 Key 배열 생성")
+    print(K)
+    print()
     
-    shuffleRc4()
+    셔플함수()
     
 }
 
-func shuffleRc4(){
+func 셔플함수(){
     
     var j = 0
     
@@ -38,19 +40,18 @@ func shuffleRc4(){
         S.swapAt(i, j)
     }
     
-//    print(S)
+    print("Key 글자 하나하나를 중심으로 S를 섞음 ")
+    print(S)
+    print()
     
 }
 
-initRc4()
-
-
-func makeKeyStreamByte(){
+func 대칭키만들기함수(){
     
     var i = 0
     var j = 0
     
-    for counter in 0..<inputText.count {
+    for _ in 0..<inputText.count {
         
         i = (i + 1) % 256
         j = (j + S[i] ) % 256
@@ -58,60 +59,56 @@ func makeKeyStreamByte(){
         
         let t = (S[i] + S[j] ) % 256
         
-        let key_StreamByte = S[t]
-        
         key_StreamBytes.append(S[t])
         
-//        let 암호문 =  Int(plainText[counter].asciiValue!) ^ S[key_StreamByte]
-//        print( String( UnicodeScalar(암호문)! ) )
-        
-//        let 복호문 = 암호문 ^ S[key_StreamByte]
-//        print( String( UnicodeScalar(복호문)! ) )
-//
-//        print()
     }
+    
+    print("암호문과 복호문의 대칭키인 KeyStream을 만듬")
+    print(key_StreamBytes)
+    print()
     
 }
 
-makeKeyStreamByte()
-
-func Ciper() -> [Character]{
+func 암호화함수() -> [Int]{
     
     var counter = 0
     let plainText = Array(inputText)
-    var 암호문 : [Character] = []
+    var 암호코드 : [Int] = []
+    var 암호문 : String = ""
     
     for element in key_StreamBytes{
         
-        let 암호코드 =  Int(plainText[counter].asciiValue!) ^ S[element]
-        print(UnicodeScalar(암호코드)!)
-        암호문.append( Character( UnicodeScalar(암호코드)! ) )
+        암호코드.append( Int(plainText[counter].asciiValue!) ^ S[element] )
+        암호문 += String (UnicodeScalar(암호코드[counter])!)
         counter += 1
     }
     
-    return 암호문
+    print("암호문 : \(암호문)")
+    
+    return 암호코드
     
 }
 
-let ciper = Ciper()
-print(ciper)
-
-func decrypt(암호문 : [Character] ) -> String {
+func 복호화함수(암호코드 : [Int] ){
     
     var counter = 0
-    var 평문 : String = ""
-    
-    print(암호문[1].asciiValue)
-    
+    var 복호문 : String = ""
     for element in key_StreamBytes {
         
-//        let 평문코드 = Int(ciperText[counter].asciiValue!) ^ S[element]
-//        print(평문코드)
-//        평문 += String( UnicodeScalar(평문코드)! )
+        let 복호코드 = 암호코드[counter] ^ S[element]
+        복호문 += String (UnicodeScalar(복호코드)!)
+        
         counter += 1
     }
     
-    return 평문
+    print("복호문 : \(복호문)")
+    
 }
 
-print(decrypt(암호문: ciper))
+초기화함수()
+대칭키만들기함수()
+
+let 암호코드 = 암호화함수()
+복호화함수(암호코드: 암호코드)
+
+
