@@ -1,6 +1,6 @@
 import UIKit
 
-typealias tuple = (x1 : Int , y1 : Int , x2 : Int , y2 : Int , com : String, cnt : Int)
+typealias tuple = (x1 : Int , y1 : Int , x2 : Int , y2 : Int , com : String, cnt : Int, i : Int)
 
 func solution(_ board:[[Int]]) -> Int {
 
@@ -8,12 +8,15 @@ func solution(_ board:[[Int]]) -> Int {
 
     var checkBox : Set<String> = []
 
-    var queue : [tuple] = [(0,0,1,0,"Ka",0)]
+    var queue : [tuple] = [(0,0,1,0,"Ka",0,-1)]
 
     visited[0][0] = 0
     visited[0][1] = 0
 
-    checkBox.insert("000100")
+    checkBox.insert("0010")
+    
+    var temp : Set<String> = []
+    temp.insert("000100")
 
     let UD : [Int] = [1,-1,0,0]
     let LR : [Int] = [0,0,1,-1]
@@ -22,9 +25,11 @@ func solution(_ board:[[Int]]) -> Int {
 
         let item = queue.removeLast()
 
+        
+        //최소값이 아닌데, 최소값으로 출력이 된 거고
+        
 //        print(item)
-        
-        
+
         for i in 0..<8{
 
             var nextX1 = item.x1
@@ -138,45 +143,78 @@ func solution(_ board:[[Int]]) -> Int {
 
             if (0..<board.count).contains(nextX1) && (0..<board.count).contains(nextX2) && (0..<board.count).contains(nextY1) && (0..<board.count).contains(nextY2) {
 
-                //작은수로 갱신하는 과정에서 거쳐가야할 곳을 못 간거고
 
                 if board[nextY1][nextX1] != 1 && board[nextY2][nextX2] != 1 {
 
-                    if visited[nextY1][nextX1] >= cnt + 1 || visited[nextY2][nextX2] >= cnt + 1 {
 
+                    let min1 = min(visited[nextY1][nextX1], cnt + 1)
+                    let min2 = min(visited[nextY2][nextX2], cnt + 1)
                     
-                        // i = 5 일 때 x2가 더 작은 쪽 ㅑ == 6일 때
+                    if i == 5 || i == 6 {
 
-                        if i == 5 || i == 6 {
+                            let makeString = "\(nextX2)\(nextY2)\(nextX1)\(nextY1)"
+                            let tempString = "\(nextX2)\(nextY2)\(min2)\(nextX1)\(nextY1)\(min1)"
+                        
+                        if checkBox.contains(makeString){
                             
-                            let min1 = min(visited[nextY1][nextX1], cnt + 1)
-                            let min2 = min(visited[nextY2][nextX2], cnt + 1)
-
-                            let makeString = "\(nextX2)\(nextY2)\(min2)\(nextX1)\(nextY1)\(min1)"
-                            
-                            if !checkBox.contains(makeString){
+                            if visited[nextY1][nextX1] >= cnt + 1 || visited[nextY2][nextX2] >= cnt + 1 {
+                                
+                                
+                                if temp.contains(tempString){continue}
+                                
+                                temp.insert(tempString)
                                 visited[nextY1][nextX1] = min(visited[nextY1][nextX1], cnt + 1)
                                 visited[nextY2][nextX2] = min(visited[nextY2][nextX2], cnt + 1)
-                                checkBox.insert(makeString)
-                                queue.insert((nextX2 , nextY2 , nextX1, nextY1, com, cnt + 1), at: 0)
+                                queue.insert((nextX2 , nextY2 , nextX1, nextY1, com, cnt + 1,i), at: 0)
+                                
                             }
+                            
+                        }
+                        else{
+                            checkBox.insert(makeString)
+                            temp.insert(tempString)
+                            
+                            visited[nextY1][nextX1] = min(visited[nextY1][nextX1], cnt + 1)
+                            visited[nextY2][nextX2] = min(visited[nextY2][nextX2], cnt + 1)
+                            queue.insert((nextX2 , nextY2 , nextX1, nextY1, com, cnt + 1,i), at: 0)
+                        }
+                        
+                        }
+                    else{
+
+                            let makeString = "\(nextX1)\(nextY1)\(nextX2)\(nextY2)"
+                        let tempString = "\(nextX1)\(nextY1)\(min1)\(nextX2)\(nextY2)\(min2)"
+                            
+                        if checkBox.contains(makeString){
+                            
+                            if visited[nextY1][nextX1] >= cnt + 1 || visited[nextY2][nextX2] >= cnt + 1 {
+                             
+                                if temp.contains(tempString){continue}
+                                
+                                
+                                temp.insert(tempString)
+                                visited[nextY1][nextX1] = min(visited[nextY1][nextX1], cnt + 1)
+                                visited[nextY2][nextX2] = min(visited[nextY2][nextX2], cnt + 1)
+                                queue.insert((nextX1 , nextY1 , nextX2, nextY2, com, cnt + 1,i), at: 0)
+                                
+                                
+                            }
+                            
                         }
                         else{
                             
-                            let min1 = min(visited[nextY1][nextX1], cnt + 1)
-                            let min2 = min(visited[nextY2][nextX2], cnt + 1)
-
-                            let makeString = "\(nextX1)\(nextY1)\(min1)\(nextX2)\(nextY2)\(min2)"
-
-                            if !checkBox.contains(makeString){
-                                visited[nextY1][nextX1] = min(visited[nextY1][nextX1], cnt + 1)
-                                visited[nextY2][nextX2] = min(visited[nextY2][nextX2], cnt + 1)
-                                checkBox.insert(makeString)
-                            queue.insert((nextX1 , nextY1 , nextX2, nextY2, com, cnt + 1), at: 0)
-
-                            }
+                            checkBox.insert(makeString)
+                            temp.insert(tempString)
+                            visited[nextY1][nextX1] = min(visited[nextY1][nextX1], cnt + 1)
+                            visited[nextY2][nextX2] = min(visited[nextY2][nextX2], cnt + 1)
+                            queue.insert((nextX1 , nextY1 , nextX2, nextY2, com, cnt + 1,i), at: 0)
+                            
+                        }
+                                
 
                         }
+
+
 
                     }
 
@@ -188,18 +226,11 @@ func solution(_ board:[[Int]]) -> Int {
         }
 
 
-    }
-   
-    for element in visited{
-        print(element)
-    }
-
+//    print(checkBox)
 
     return visited[board.count - 1][board.count - 1]
 }
 
-
-let board : [[Int]] = [[0, 0, 0, 0, 0, 0, 1], [1, 1, 1, 1, 0, 0, 1], [0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 0, 0], [0, 1, 1, 1, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0]]
+let board : [[Int]] =  [[0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 1, 1, 1, 1, 0, 0], [0, 1, 1, 1, 1, 1, 1, 1, 1], [0, 0, 1, 1, 1, 1, 1, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 1, 1, 1, 1, 1, 1, 1, 0]]
 print(solution(board))
-
 
