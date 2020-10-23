@@ -60,4 +60,7 @@ class Solution {
 
 let input = [[1,1,1],[1,1,1],[1,1,1]]
 
-print(Solution().maxDistance(input))
+//print(Solution().maxDistance(input))
+
+
+
