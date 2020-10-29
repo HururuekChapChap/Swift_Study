@@ -10,7 +10,7 @@ struct A5_KeyStream{
     var initY : Int
     var initZ : Int
     
-    var checkX = [13, 16 , 17, 18]
+    var checkX = [13, 15 , 17, 18]
     var checkY = [20 , 21]
     var checkZ = [7, 20, 21, 22]
     
