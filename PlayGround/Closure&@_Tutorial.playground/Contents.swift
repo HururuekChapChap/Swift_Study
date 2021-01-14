@@ -80,7 +80,7 @@ func callTapHandler(){
     tapHandler?("Hello")
 }
 
-callTapHandler()
+//callTapHandler()
 
 //autoclosure는 내용물을 좀더 깨끗하게 할때, 그런데 반환인자가 없어야 한다.
 func autoClosure(name : String , someClosure : @autoclosure ()->()){
@@ -90,7 +90,7 @@ func autoClosure(name : String , someClosure : @autoclosure ()->()){
     someClosure()
 }
 
-autoClosure(name: "Hello", someClosure: (print("Taesoo")))
+//autoClosure(name: "Hello", someClosure: (print("Taesoo")))
 
 func dispatchQueue(number : Int , escapingHandler : @escaping (Int) -> () , completHandler : (Int)->(Int) ) -> Int {
     
@@ -117,7 +117,9 @@ let result  = dispatchQueue(number: 5, escapingHandler: { (temp) in
     return result * 2
 }
 
-print("last ressult : \(result)")
+//print("last ressult : \(result)")
+
+
 
 
     
