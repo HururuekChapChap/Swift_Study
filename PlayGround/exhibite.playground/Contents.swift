@@ -41,7 +41,7 @@ class Student : Person{
     
     
     //Static 변수는 Override가 안되지만 Class는 가능하다
-    //override static func typeFunction(){}
+//    override static func typeFunction(){}
     
 }
 
@@ -82,7 +82,7 @@ print(UniversityStudent.introduceClass() as String)
 //자기 보다 윗선의 introduceClass 호출 없다면 그 위에 호출
 UniversityStudent.introduceClass() as Void
 
-
+print("===============================")
 
 class A {
     var name : String = ""
@@ -131,3 +131,107 @@ jayB.koreanAge = 15
 
 print(jayB.introduction)
 print(jayB.koreanAge)
+
+print("===============================")
+
+class C {
+    var name : String = ""
+    var age : Int = 0 {
+        didSet{
+            print("Person age : \(self.age)")
+        }
+    }
+    
+    var koreanAge : Int {
+        return self.age + 1
+    }
+    
+    var fullName : String {
+        get {
+            return self.name
+        }
+        
+        set{
+            self.name = newValue
+        }
+    }
+}
+
+class D : C {
+    var grade : String = ""
+    
+    //이렇게 Override로 property 감시자인 willSet과 DidSet 모두 재정의가 가능하다
+    override var age : Int {
+        didSet{
+            print("override Student age : \(self.age)")
+        }
+    }
+    
+    override var koreanAge: Int {
+        get{
+            return super.koreanAge
+        }
+        
+        set {
+            self.age = newValue - 1
+        }
+    }
+    
+    override var fullName : String {
+        didSet{
+            print("Full Name : \(self.fullName)")
+        }
+    }
+    
+}
+
+let yagomC : C = C()
+yagomC.name = "yagomC"
+yagomC.age = 55
+yagomC.fullName = "jo YagomC"
+print(yagomC.koreanAge)
+
+let jayD : D = D()
+jayD.name = "jayD"
+jayD.age = 14
+
+jayD.koreanAge = 15
+
+jayD.fullName = "Kim jayD"
+print(jayD.koreanAge)
+
+
+class E {
+    
+    var name : String
+    var grade : Int = 1
+    
+    init(name : String){
+        self.name = name
+    }
+        
+    convenience init (grade : Int ){
+        self.init(name : "ChapChap")
+        self.grade = grade
+    }
+    
+}
+
+let test = E.init(grade: 3)
+print(test.grade)
+
+class F : E {
+    var major : String
+    init(name : String, grade : Int, major : String){
+        self.major = major
+        //super 클래스의 init()을 호출하려면 Designated Init을 호출해야한다.
+//        super.init(grade: 3)
+        super.init(name: name)
+    }
+    
+    convenience init(){
+        self.init(name : "Hururuek", grade : 2, major : "Computer")
+    }
+}
+
+
