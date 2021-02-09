@@ -25,6 +25,7 @@ class Person : NACoding{
 
 class Student : Person{
     var major : String = "Unknown - Major"
+
 }
 
 
@@ -132,3 +133,20 @@ print(yagom.grade)
 
 let juHyun : E = E(name: "JuHyun")
 print(juHyun.name)
+
+
+class J {
+    var name : String
+    
+    init(){
+        self.name = "ABC"
+    }
+}
+
+class K : J{
+    var major : String
+    
+    override init(){
+        self.major = "DEF"
+    }
+}
