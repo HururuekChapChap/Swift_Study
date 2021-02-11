@@ -104,6 +104,7 @@ checkType(of: americano) // item is Americano
 //Latte는 Coffee의 자식이다. 따라서 Latte는 Coffee처럼 위장할 수 있다.
 let camouflageType : Coffee = Latte(flavor: "Pink", shot: 3)
 
+
 //camouflageType은 Coffee인데 원래 태생이 Latte이기 때문에 Latte로 타입 변경을 해준다.
 if let downCasting = camouflageType as? Latte{
     downCasting.printFlavor()
@@ -139,9 +140,6 @@ if let downCasting = coffee as? Latte {
     print("downCasting fail : " , coffee.description)
 }
 
-if let upCasting = latte as? Coffee{
-    
-}
 
 //같은 타입일 경우에는 as? 가 아니라 보통 as로 해줘야 한다.
 let downCasting = coffee as Coffee
