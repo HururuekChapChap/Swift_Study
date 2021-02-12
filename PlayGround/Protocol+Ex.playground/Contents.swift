@@ -31,6 +31,7 @@ class Message : SendableProtocol , ReceiveableProtocol {
     var to: ReceiveableProtocol?
     
     func send(data: Any) {
+        print("Message send")
         guard let receiver : ReceiveableProtocol = self.to else {
             print("Message has no receiver")
             return
@@ -68,6 +69,7 @@ class Mail : SendableProtocol , ReceiveableProtocol {
     
     func send(data: Any) {
         
+        print("Mail send")
         guard let receiver : ReceiveableProtocol = self.to else {
             print("Mail has no receiver")
             return
@@ -234,6 +236,110 @@ class B : A , Named{
     }
 }
 
+//MARK : 프로토콜 조합
+
+protocol one {
+    var one : String {get}
+}
+
+protocol two {
+    var two : Int {get}
+}
+
+struct Ship : one , two {
+    var one : String
+    var two : Int
+}
+
+struct airPlane : one{
+    var one : String
+}
+
+class Car : one{
+    var one : String
+    
+    init(name : String){
+        self.one = name
+    }
+}
+
+class Truck : Car , two{
+    var two : Int
+    
+    init(name : String , age : Int){
+        self.two = age
+        super.init(name: name)
+    }
+}
+
+//조합을 하게 된다면 아래 처럼 접근이 가능하다.
+func celebrateBirthDay(to celebrator  : one & two){
+    //one & two 모두 준수하기 녀석이 들어오기 때문에 아래 처럼 각 부분에 접근이 가능하다.
+    print("Happty BirthDay \(celebrator.one)!! \n Now you are \(celebrator.two)")
+}
+
+let yahagom : Ship = Ship(one: "yahagom", two: 99)
+//이렇게 yahagom은 Ship 자체가 one two 프로토콜을 모두 상속 받기 때문에 사용 될 수 있다.
+celebrateBirthDay(to: yahagom)
+
+let myCar : Car = Car(name: "벤츠")
+//celebrateBirthDay(to: myCar) // 반면 myCar는 two를 준수하지 않았기 때문에 접근 할 수 없다.
+
+//그리고 아래 처럼 클래스와 프로토콜 조합도 가능하다.
+//이렇게 했을 경우에는 Car 타입이면서 two를 준수하는 인스턴스가 와야한다.
+//그래서 Car를 상속 받고 있으면서도 two를 준수하고 있는 Truck은 가능하다.
+var classAndProtocol : Car & two = Truck(name: "truck", age: 99)
+
+//하지만 클래스 타입은 한 타입만 가능하다.
+//Protocol-constrained type cannot contain class 'Infomation' because it already contains class 'Car'
+//그래서 이미 Car 클래스를 포함하고 있기 때문에 Infomation은 들어 올 수 없다고 하는 것이다.
+//var twoClassAndProtocol : Car & Infomation & two
+
+// 프로토콜 선택적 요구
+// - 프로토콜을 선택적으로 적용하려고 할 때 이렇게 해준다.
+
+@objc protocol Moveable {
+    func walk()
+    //선택적인 프로토콜은 이렇게 해준다.
+    @objc optional func fly()
+}
+
+class Tiger : Moveable {
+    
+    func walk() {
+        print("Tiger walk")
+    }
+    
+}
+
+class Bird : Moveable {
+    func walk() {
+        print("Bird Walk")
+    }
+    
+    func fly(){
+        print("Bird Flys")
+    }
+}
+
+let tiger : Tiger = Tiger()
+let bird : Bird = Bird()
+
+tiger.walk()
+bird.walk()
+
+bird.fly()
+
+var movableInstance : Moveable = tiger
+movableInstance.fly?() //nil
+
+movableInstance = bird
+movableInstance.fly?()
+
+
+
+
+
 //MARK : Optional Chaning
 
 class Room{
@@ -243,7 +349,44 @@ class Room{
         self.number = number
     }
     
+    enum Kind{
+        case negative
+        case positive
+        case zero
+    }
+    
+    func kindOfnumber() -> Kind{
+        switch number {
+        
+        case 0 :
+            return .zero
+        
+        case let x where x % 2 == 0:
+            print(x)
+            return .negative
+            
+        default:
+            return .positive
+        }
+    }
+    
 }
+
+extension Room.Kind{
+
+    var isRoomEmpty : Bool {
+        
+        switch self {
+        case .negative:
+            return false
+        default:
+            return true
+        }
+        
+    }
+    
+}
+
 
 class Building{
     var name : String
@@ -257,6 +400,15 @@ class Building{
     
     private func isRoomExist() -> Bool {
         return room == nil ? false : true
+    }
+    
+    func resetRoom(number : Int) -> Room {
+        
+        let newRoom = Room(number: number)
+        self.room = newRoom
+        
+        return self.room!
+        
     }
     
     func makeRoom(number : Int) -> Room {
@@ -323,69 +475,17 @@ class Infomation{
 let chapchap : Infomation = Infomation(name: "ChapChap")
 
 chapchap.address = Address(province: "대한민국", city: "서울")
+chapchap.address?.makeBuilding(name: "은평뉴타운", detail: "629")
+
+if let exist = chapchap.address?.building{
+    print(exist.name)
+}
+else{
+    print("중간에 값이 없는 것이 있습니다.")
+}
 
 chapchap.address?.makeBuilding(name: "은평뉴타운", detail: "629").makeRoom(number: 1202).number
+chapchap.address?.makeBuilding(name: "청구아파트", detail: "420").resetRoom(number: 629).kindOfnumber().isRoomEmpty
 chapchap.address?.fullAddress()
 chapchap.address?.fullAddress()?.isEmpty
 
-
-//MARK : 프로토콜 조합
-
-protocol one {
-    var one : String {get}
-}
-
-protocol two {
-    var two : Int {get}
-}
-
-struct Ship : one , two {
-    var one : String
-    var two : Int
-}
-
-struct airPlane : one{
-    var one : String
-}
-
-class Car : one{
-    var one : String
-    
-    init(name : String){
-        self.one = name
-    }
-}
-
-class Truck : Car , two{
-    var two : Int
-    
-    init(name : String , age : Int){
-        self.two = age
-        super.init(name: name)
-    }
-}
-
-//조합을 하게 된다면 아래 처럼 접근이 가능하다.
-func celebrateBirthDay(to celebrator  : one & two){
-    //one & two 모두 준수하기 녀석이 들어오기 때문에 아래 처럼 각 부분에 접근이 가능하다.
-    print("Happty BirthDay \(celebrator.one)!! \n Now you are \(celebrator.two)")
-}
-
-let yahagom : Ship = Ship(one: "yahagom", two: 99)
-//이렇게 yahagom은 Ship 자체가 one two 프로토콜을 모두 상속 받기 때문에 사용 될 수 있다.
-celebrateBirthDay(to: yahagom)
-
-let myCar : Car = Car(name: "벤츠")
-//celebrateBirthDay(to: myCar) // 반면 myCar는 two를 준수하지 않았기 때문에 접근 할 수 없다.
-
-//그리고 아래 처럼 클래스와 프로토콜 조합도 가능하다.
-//이렇게 했을 경우에는 Car 타입이면서 two를 준수하는 인스턴스가 와야한다.
-//그래서 Car를 상속 받고 있으면서도 two를 준수하고 있는 Truck은 가능하다.
-var classAndProtocol : Car & two = Truck(name: "truck", age: 99)
-
-//하지만 클래스 타입은 한 타입만 가능하다.
-//Protocol-constrained type cannot contain class 'Infomation' because it already contains class 'Car'
-//그래서 이미 Car 클래스를 포함하고 있기 때문에 Infomation은 들어 올 수 없다고 하는 것이다.
-//var twoClassAndProtocol : Car & Infomation & two
-
-//
