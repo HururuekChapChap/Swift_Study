@@ -1,5 +1,132 @@
 import UIKit
 
+protocol AttackerProtocol{
+    
+    var attacker : AttackerProtocol? {get set}
+    
+    func attack()
+    
+    func attackWay()
+    
+}
+
+protocol DefenceProtocol{
+    
+    var name : String {get set}
+    
+    var defencer : DefenceProtocol? {get set}
+    
+    func defence(instance : DefenceProtocol, attacker : AttackerProtocol & DefenceProtocol)
+    
+    func defecneWay(attacker : AttackerProtocol & DefenceProtocol)
+    
+}
+
+class Player_A : AttackerProtocol , DefenceProtocol {
+    
+    //AttackerProtocol
+    var attacker: AttackerProtocol?
+    
+    func attack() {
+        guard let att = self.attacker else {
+            print("\(self.name) attacker is nil")
+            return}
+        
+        att.attackWay()
+    }
+    
+    func attackWay() {
+        print("\(self.name) use Player_A Attack")
+    }
+    
+    //DefenceProtocol
+    
+    var name: String
+    
+    var defencer: DefenceProtocol?
+    
+    func defence(instance : DefenceProtocol, attacker : AttackerProtocol & DefenceProtocol) {
+        guard let defence = self.defencer else {
+            instance.defecneWay(attacker: attacker)
+            return
+        }
+        
+        defence.defecneWay(attacker: attacker)
+    }
+    
+    func defecneWay(attacker : AttackerProtocol & DefenceProtocol) {
+        print("\(self.name) defence \(attacker.name) with Player_A Style")
+    }
+    
+    init(name : String){
+        self.name = name
+        self.attacker = self
+        self.defencer = self
+    }
+
+    
+}
+
+class Player_B : AttackerProtocol , DefenceProtocol {
+    
+    //AttackerProtocol
+    var attacker: AttackerProtocol?
+    
+    func attack() {
+        guard let att = self.attacker else {
+            print("\(self.name) attacker is nil")
+            return}
+        
+        att.attackWay()
+    }
+    
+    func attackWay() {
+        print("\(self.name) use Player_B Attack")
+    }
+    
+    //DefenceProtocol
+    
+    var name: String
+    
+    var defencer: DefenceProtocol?
+    
+    func defence(instance : DefenceProtocol, attacker : AttackerProtocol & DefenceProtocol) {
+        guard let defence = self.defencer else {
+            instance.defecneWay(attacker: attacker)
+            return
+        }
+        
+        defence.defecneWay(attacker: attacker)
+    }
+    
+    func defecneWay(attacker : AttackerProtocol & DefenceProtocol) {
+        print("\(self.name) defence \(attacker.name) with Player_B Style")
+    }
+    
+    init(name : String){
+        self.name = name
+        self.attacker = self
+        self.defencer = self
+    }
+
+}
+
+let playerA : Player_A = Player_A(name: "Minsu")
+let playerB : Player_B = Player_B(name: "Chulsu")
+
+playerA.attack() // Minsu use Player_A Attack
+playerB.attack() // Chulsu use Player_B Attack
+
+playerA.defence(instance: playerB, attacker: playerB) // Minsu defence Chulsu with Player_A Style
+playerB.defence(instance: playerA, attacker: playerA) // Chulsu defence Minsu with Player_B Style
+
+playerA.attacker = playerB
+playerA.attack() // Chulsu use Player_B Attack
+
+playerB.defencer = nil
+playerB.defence(instance: playerA, attacker: playerA) // Minsu defence Minsu with Player_A Style
+
+
 protocol ReceiveableProtocol{
     func received(data : Any, from : SendableProtocol)
 }
@@ -335,6 +462,8 @@ movableInstance.fly?() //nil
 
 movableInstance = bird
 movableInstance.fly?()
+
+
 
 
 
