@@ -1,5 +1,39 @@
 import UIKit
 
+
+protocol extensionProtocol{
+    var name : String {get set}
+}
+
+extension extensionProtocol{
+    
+    func function(){
+        hide()
+    }
+    
+    private func hide(){
+        print("Hello")
+    }
+    
+}
+
+
+class Test : extensionProtocol{
+    var name: String = "name is test"
+    
+    func function() {
+        print("\(self.name) Hello world")
+    }
+
+    
+}
+
+let test = Test()
+
+test.function()
+
+
+
 protocol AttackerProtocol{
     
     var attacker : AttackerProtocol? {get set}
@@ -122,6 +156,7 @@ playerB.defence(instance: playerA, attacker: playerA) // Chulsu defence Minsu wi
 
 playerA.attacker = playerB
 playerA.attack() // Chulsu use Player_B Attack
+playerA.attacker?.attack() // Chulsu use Player_B Attack
 
 playerB.defencer = nil
 playerB.defence(instance: playerA, attacker: playerA) // Minsu defence Minsu with Player_A Style
